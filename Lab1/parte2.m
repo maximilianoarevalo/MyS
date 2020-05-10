@@ -20,3 +20,4 @@ valorI = input(c_valorI);
 %Se ejecuta el algoritmo de Newton Raphson
 salida = newtonRaphson(polinomio,iteraciones,error,valorI);
 salida
+
