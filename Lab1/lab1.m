@@ -41,8 +41,6 @@ plot(x2,b,'g +');
 hold off;
 
 
-
-%parte 2
 %Escala normal
 x3 = -10:0.05:10;
 c = 6 * exp(x3+18);
@@ -59,3 +57,8 @@ title('Función 6*exp(x+18) Escala Logarítmica');
 ylabel('y');
 xlabel('x');
 grid on;
+
+
+f1 = @(x) x^2-1;
+xOut = newtonRaphson(f1,10,0.01,0);
+xOut
