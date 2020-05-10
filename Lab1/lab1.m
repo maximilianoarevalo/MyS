@@ -60,9 +60,6 @@ xlabel('x');
 grid on;
 
 
-%f1 = @(x) x^2-1;
-%xOut = newtonRaphson(f1,10,0.01,0);
+%f1 = @(x) x^3 - 3*x + 2;
+%xOut = newtonRaphson(f1,15,10^-8,5);
 %xOut
-f1 = @(x) x^3 - 3*x + 2;
-xOut = newtonRaphson(f1,15,10^-8,5);
-xOut
