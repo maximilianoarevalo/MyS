@@ -1,4 +1,3 @@
-format
 %Laboratorio 1 Modelacion y Simulacion 1-2020
 %Integrantes: Maximiliano Arevalo - Benjamin Muñoz
 
@@ -64,5 +63,5 @@ grid on;
 %xOut = newtonRaphson(f1,10,0.01,0);
 %xOut
 f1 = @(x) x^3 - 3*x + 2;
-xOut = newtonRaphson(f1,15,10^-8,5);
+xOut = newtonRaphson(f1,2000,10^-8,5);
 xOut

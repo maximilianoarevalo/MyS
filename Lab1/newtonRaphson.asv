@@ -11,8 +11,7 @@ while i < iteraciones && e > error
     xa = xs;
     i = i + 1;
 end
-resultado = xs;
+xOut = xs;
 %Se adapta el resultado para mostrarlo luego
-resultado_double = double(resultado);
-xOut = vpa(resultado_double);
+
 end
