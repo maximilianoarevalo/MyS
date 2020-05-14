@@ -2,8 +2,6 @@ syms x
 %Se solicita el polinomio
 c_polinomio = 'Ingrese el polinomio como vector:';
 v_polinomio = input(c_polinomio);
-polinomio = poly2sym(v_polinomio,x);
-disp(polinomio);
 
 %Se solicita el numero de iteraciones
 c_iteraciones = 'Ingrese el numero de iteraciones:';
@@ -18,5 +16,5 @@ c_valorI = 'Ingrese el valor inicial x0:';
 valorI = input(c_valorI);
 
 %Se ejecuta el algoritmo de Newton Raphson
-salida = newtonRaphson(polinomio,iteraciones,error,valorI);
+salida = newtonRaphson(v_polinomio,iteraciones,error,valorI);
 salida

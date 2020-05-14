@@ -4,8 +4,9 @@ e = error + 1;
 xa = x0;
 
 while i < iteraciones && e > error
-    eva = polinomio(xa);
-    der = derivada(polinomio,xa);
+    eva = polyval(polinomio,xa);
+    derivate = polyder(polinomio);
+    der = polyval(derivate,xa);
     xs = xa - (eva) / (der);
     e = abs(xs - xa);
     xa = xs;
