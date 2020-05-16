@@ -35,10 +35,11 @@ xlabel('x');
 %Ambos juntos
 figure
 hold on;
+title('Función a(x) y Función b(x)');
 plot(x1,a,'r *');
 
 plot(x2,b,'g +');
-
+legend('a(x)','b(x)');
 hold off;
 
 
