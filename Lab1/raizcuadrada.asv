@@ -1,11 +1,18 @@
-%Se solicita el tamaño del vector
-elements = input('Ingrese el tamaño del vector = ');
-n = 1;
-%Se obtienen los valores
-while n <= elements
+%Se solicita el vector
+%entrada = 'Ingrese el  vector:';
+%vector_in = input(entrada);
+
+limit=input('Ingrese el tamaño del vector = ');
+n=1;
+while n<=limit
   vector_in(1,n)=input(sprintf('Ingrese el valor del elemento %d: ',n));
-  n = n+1;
+  if isstring(vector_in(n))
+      disp("A");
+      error("No se pueden agregar letras al vector");
+  end
+  n=n+1;
 end
+disp(vector_in)
 
 %raiz cuadrada de la suma de los 4 elementos de mayor valor
 maximo = maxk(vector_in,4);
