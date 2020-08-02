@@ -5,11 +5,13 @@ H4 = tf(1,[7,10]);
 H5 = tf([8,8],[1,2,3,0]);
 H6 = tf([3,2],[5,7,10]);
 
-A1 = feedback(H3,-1)
+A1 = feedback(H3,1)
 A2 = parallel(H4,H5)
 
-A = A1*A2*H6
+A = series(A1,A2)
+A_final = series(A,H6)
 
-final = H1+H2+A
+pre_final = parallel(H1,H2)
+final = parallel(pre_final,A_final)
 
 step(final)
