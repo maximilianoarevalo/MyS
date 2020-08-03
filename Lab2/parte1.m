@@ -1,4 +1,7 @@
 %Parte 1
+%Algunas lineas de codigo para los graficos se encuentran comentadas para
+%evitar confusiones, por lo que se aconseja descomentarlas para analizar
+%cada grafico requerido
 
 %Funcion 1
 %Definicion de numerador y denominador funcion de transferencia
@@ -47,3 +50,15 @@ step(sys3);
 step(num3_2,den3_2);
 %title("Función de transferencia 3: Lazo Cerrado");
 %grid on
+
+%Informacion para el cuadro comparativo:
+%Ceros de las funciones
+[z,gain] = zero(sys1);
+[z,gain] = zero(sys2);
+%Polos de las funciones
+pole1 = pole(sys1);
+pole2 = pole(sys2);
+%Informacion de los sistemas
+s1 = stepinfo(sys1);
+s2 = stepinfo(sys2);
+
