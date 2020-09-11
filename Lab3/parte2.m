@@ -1,5 +1,5 @@
 %Parte 2: 
-
+disp('Ejercicio propuesto en enunciado:')
 %Donde:
 %F1: Flujo de entrada y salida del estanque 1
 %F2: Flujo de salida del estanque 2
@@ -41,6 +41,22 @@ Y = [0 1]*[h1;h2];
 disp('Representacion matricial de variables de salida:')
 disp('[y] =')
 pretty(Y);
+disp(' ')
+disp('Donde las matrices correspondientes son:')
+%Matrices individuales:
+A = [0 0;0 -1/A1];
+B = [0;1/A2];
+C = [0 1];
+D = [0;0];
+disp('A =')
+disp(A)
+disp('B =')
+disp(B)
+disp('C =')
+disp(C)
+disp('D =')
+disp(D)
+disp(' ')
 
 %%%%% Casos %%%%%
 disp('Casos:')
@@ -122,12 +138,30 @@ F1e = (l1 - l2)/R1;
 F2e = l2/R2;
 
 %Representacion matricial:
+
 %Matriz variable de estado
-Xe = [-1/A1e*R1 1/A1e*R2;1/A2e*R1 -1/A2e*(R1+R2)]*[l1;l2] + [1/A1e;0]*F0;
+Xe = [-1/(A1e*R1) 1/(A1e*R1);1/(A2e*R1) -(R1+R2)/(A2e*R1*R2)]*[l1;l2] + [1/A1e;0]*F0;
+disp('Representacion matricial de variables de estado:')
 disp('[dl1;dl2] =')
 pretty(Xe);
+
 %Matriz de salida
-Ye = [1 0;0 1]*[l1;l2] + [0;0]*F1e;
+Ye = [1 0;0 1]*[l1;l2] + [0;0]*F0;
 disp('Representacion matricial de variables de salida:')
 disp('[y] =')
 pretty(Ye);
+disp(' ')
+disp('Donde las matrices correspondientes son:')
+%Matrices individuales:
+Ae = [-1/(A1e*R1) 1/(A1e*R1);1/(A2e*R1) -(R1+R2)/(A2e*R1*R2)];
+Be = [1/A1e;0];
+Ce = [1 0;0 1];
+De = [0;0];
+disp('A =')
+disp(Ae)
+disp('B =')
+disp(Be)
+disp('C =')
+disp(Ce)
+disp('D =')
+disp(De)
