@@ -7,19 +7,31 @@ public class Individuo{
   float maxspeed;
   boolean sick;
   float pe;
-  float number;
+  float number_sick;
+  float number_movement;
+  float sigma = 0.5;
+  float theta = random(0,TWO_PI);
+  int s = 2;
   
   Individuo(float x, float y){
     position = new PVector(x,y);
-    velocity = PVector.random2D();
+    int walking_way = int(random(0,9));
+    if(walking_way % 2 == 0){
+      //Random Walk Gaussian
+      velocity = new PVector(sigma * randomGaussian(),sigma * randomGaussian());
+    }
+    else{
+      //Alternative Random Walk Gaussian
+      velocity = new PVector(s * cos(theta), s * sin(theta));
+    }
     acceleration = new PVector(0,0);
     r = 2.0;
     maxspeed = 5;
     maxforce = 90;
     pe = 0.1;
-    number = random(0,1);
+    number_sick = random(0,1);
     sick = false;
-    if(number <= pe)
+    if(number_sick <= pe)
       sick = true;
   }
   
@@ -37,8 +49,6 @@ public class Individuo{
   }
   
   void render(){
-    //stroke(255);
-    //strokeWeight(2);
     if (sick == true){
       fill(255,0,0);
       ellipse(position.x,position.y,20,20);
