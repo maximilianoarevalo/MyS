@@ -5,6 +5,9 @@ public class Individuo{
   float r;
   float maxforce;
   float maxspeed;
+  boolean sick;
+  float pe;
+  float number;
   
   Individuo(float x, float y){
     position = new PVector(x,y);
@@ -12,7 +15,12 @@ public class Individuo{
     acceleration = new PVector(0,0);
     r = 2.0;
     maxspeed = 5;
-    maxforce = 0.100;
+    maxforce = 90;
+    pe = 0.1;
+    number = random(0,1);
+    sick = false;
+    if(number <= pe)
+      sick = true;
   }
   
   void run(ArrayList<Individuo> individuos){
@@ -29,12 +37,16 @@ public class Individuo{
   }
   
   void render(){
-    //circle(random(0,1024),random(0,1024),2);
-    // heading2D() above is now heading() but leaving old syntax until Processing.js catches up
-    stroke(255);
-    strokeWeight(2);
-    fill(127);
-    ellipse(position.x,position.y,10,10);
+    //stroke(255);
+    //strokeWeight(2);
+    if (sick == true){
+      fill(255,0,0);
+      ellipse(position.x,position.y,20,20);
+    }
+    else{
+      fill(0,128,0);
+      ellipse(position.x,position.y,20,20);
+    }
   }
 
   
