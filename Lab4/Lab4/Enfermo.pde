@@ -16,14 +16,23 @@ public class Enfermo extends Individuo{
     }
     
     void update(){
-       alternativeMovement();
+       if(walking_way % 2 == 0){
+        gaussianWalking();
+      }
+      else{
+        //Alternative Random Walk Gaussian
+        alternativeWalking();
+      }
     }
     
-    void gaussianMovement(){
-       position.x += 1.5*randomGaussian();
-       position.y += 1.5*randomGaussian();
+    void gaussianWalking(){
+       position.x += sigma*randomGaussian();
+       position.y += sigma*randomGaussian();
     }
-    void alternativeMovement(){
+    
+    void alternativeWalking(){
+       float s = random(1,5);
+       float theta = random(0,2*PI);
        position.x += s*cos(theta);
        position.y += s*sin(theta);
     }

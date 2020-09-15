@@ -1,23 +1,15 @@
 public class Individuo{
   PVector position;
   PVector velocity;
-  PVector acceleration;
   float r;
-  float maxforce;
-  float maxspeed;
   boolean sick;
   int c1, c2, c3;
   int walking_way;
-  float sigma = 0.5;
-  float theta = random(0,2*PI);
-  float s = 1;
+  float sigma = 1.5;
+  float maxspeed= 0.5;
   
   Individuo(float x, float y){
     position = new PVector(x,y);
-    velocity = new PVector(0,maxspeed);
-    acceleration = new PVector(0,0);
-    maxspeed = 5;
-    maxforce = 10;
     walking_way = int(random(0,9));
   }  
   
