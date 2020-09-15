@@ -9,12 +9,12 @@ public class Individuo{
   int c1, c2, c3;
   int walking_way;
   float sigma = 0.5;
-  float theta = random(0,TWO_PI);
-  int s = 2;
+  float theta = random(0,2*PI);
+  float s = 1;
   
   Individuo(float x, float y){
     position = new PVector(x,y);
-    velocity = new PVector(0,0);
+    velocity = new PVector(0,maxspeed);
     acceleration = new PVector(0,0);
     maxspeed = 5;
     maxforce = 10;
@@ -27,10 +27,10 @@ public class Individuo{
   }
 
   
-  void borders(){
-    if (position.x < -r) position.x = width+r;
-    if (position.y < -r) position.y = height+r;
-    if (position.x > width+r) position.x = -r;
-    if (position.y > height+r) position.y = -r;
+void borders(){
+    if (position.x < 0) position.x = width+r;
+    if (position.y < 0) position.y = height+r;
+    if (position.x > width+0) position.x = -r;
+    if (position.y > height+0) position.y = -r;
   }
 }

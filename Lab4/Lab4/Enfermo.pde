@@ -6,15 +6,7 @@ public class Enfermo extends Individuo{
     c1 = 255;
     c2 = 0;
     c3 = 0;
-    //Manera de caminar propia
-    if(walking_way % 2 == 0){
-      //Random Walk Gaussian
-      velocity = new PVector(sigma * randomGaussian(),sigma * randomGaussian());
-    }
-    else{
-      //Alternative Random Walk Gaussian
-      velocity = new PVector(s * cos(theta), s * sin(theta));
-    }
+
   }
   
     void run(ArrayList<Enfermo> enfermos){
@@ -24,9 +16,15 @@ public class Enfermo extends Individuo{
     }
     
     void update(){
-      velocity.add(acceleration);
-      velocity.limit(maxspeed);
-      position.add(velocity);
-      acceleration.mult(0);
+       alternativeMovement();
+    }
+    
+    void gaussianMovement(){
+       position.x += 1.5*randomGaussian();
+       position.y += 1.5*randomGaussian();
+    }
+    void alternativeMovement(){
+       position.x += s*cos(theta);
+       position.y += s*sin(theta);
     }
 }
