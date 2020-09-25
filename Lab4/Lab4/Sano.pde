@@ -6,7 +6,15 @@ public class Sano extends Individuo{
     c1 = 0;
     c2 = 128;
     c3 = 0;
-    
+    //Manera de caminar propia
+    if(walking_way % 2 == 0){
+      //Random Walk Gaussian
+      velocity = new PVector(sigma * randomGaussian(),sigma * randomGaussian());
+    }
+    else{
+      //Alternative Random Walk Gaussian
+      velocity = new PVector(s * cos(theta), s * sin(theta));
+    }
   }
   
     void run(ArrayList<Sano> sanos){
@@ -16,24 +24,10 @@ public class Sano extends Individuo{
     }
     
     void update(){
-       if(walking_way % 2 == 0){
-        gaussianWalking();
-      }
-      else{
-        //Alternative Random Walk Gaussian
-        alternativeWalking();
-      }
+      velocity.add(acceleration);
+      velocity.limit(maxspeed);
+      position.add(velocity);
+      acceleration.mult(0);
     }
     
-    void gaussianWalking(){
-       position.x += sigma*randomGaussian();
-       position.y += sigma*randomGaussian();
-    }
-    
-    void alternativeWalking(){
-       float s = random(1,5);
-       float theta = random(0,2*PI);
-       position.x += s*cos(theta);
-       position.y += s*sin(theta);
-    }
 }

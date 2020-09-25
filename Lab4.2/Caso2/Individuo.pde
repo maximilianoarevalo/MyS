@@ -1,0 +1,171 @@
+public class Individuo{
+  PVector position;
+  PVector velocity;
+  PVector acceleration;
+  float r;
+  float maxforce;
+  float maxspeed;
+  boolean sick;
+  int c1, c2, c3;
+  float radius = 8.0;
+  float vel = 2.0;
+  float minDistance = 2 * radius;
+  float socialDistancing = 1.5 * minDistance;
+  float pTransmision = 0.7;
+  float pEnfermos = 0.3;
+  int maxTiempoEnfermo = 500;
+  boolean maskOn;
+  float pInHouse = 0.2;
+  float m = radius*.1;
+  
+  Individuo(float x, float y){
+    position = new PVector(x,y);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(0,0);
+    maxspeed = 5;
+    maxforce = 10;
+    velocity = PVector.random2D();
+    
+  }  
+  
+  void render(){
+    fill(c1,c2,c3);
+    ellipse(position.x,position.y,20,20);
+  }
+    void checkBoundaryCollision() {
+    if (position.x > width-radius) {
+      position.x = width-radius;
+      velocity.x *= -1;
+    } else if (position.x < radius) {
+      position.x = radius;
+      velocity.x *= -1;
+    } else if (position.y > height-radius) {
+      position.y = height-radius;
+      velocity.y *= -1;
+    } else if (position.y < radius) {
+      position.y = radius;
+      velocity.y *= -1;
+    }
+  }
+
+
+
+  void checkCollision(Individuo other){
+    //se ven las distancias
+    PVector distanceVect = PVector.sub(other.position,position);
+    //magnitud del vector que separa los individuos
+    float distanceVectMag = distanceVect.mag();
+    
+    //minima distancia antes de la colision
+    float minDistance = 2*radius;
+    
+    if(distanceVectMag < minDistance){
+      float distanceCorrection = (minDistance - distanceVectMag)/2.0;
+      PVector d = distanceVect.copy();
+      PVector correctionVector = d.normalize().mult(distanceCorrection);
+      other.position.add(correctionVector);
+      position.sub(correctionVector);
+      
+      //get angle of distance vect
+      float theta = distanceVect.heading();
+      // precalradius + other.radiusrig values
+      float sine = sin(theta);
+      float cosine = cos(theta);
+
+      /* bTemp will hold rotated ball positions. You 
+       just need to worry about bTemp[1] position*/
+      PVector[] bTemp = {
+        new PVector(), new PVector()
+      };
+      /* this ball's position is relative to the other
+       so you can use the vector between them (bVect) as the 
+       reference point in the rotation expressions.
+       bTemp[0].position.x and bTemp[0].position.y will initialize
+       automatically to 0.0, which is what you want
+       since b[1] will rotate around b[0] */
+      bTemp[1].x  = cosine * distanceVect.x + sine * distanceVect.y;
+      bTemp[1].y  = cosine * distanceVect.y - sine * distanceVect.x;
+
+      // rotate Temporary velocities
+      PVector[] vTemp = {
+        new PVector(), new PVector()
+      };
+       vTemp[0].x  = cosine * velocity.x + sine * velocity.y;
+      vTemp[0].y  = cosine * velocity.y - sine * velocity.x;
+      vTemp[1].x  = cosine * other.velocity.x + sine * other.velocity.y;
+      vTemp[1].y  = cosine * other.velocity.y - sine * other.velocity.x;
+
+      /* Now that velocities are rotated, you can use 1D
+       conservation of momentum equations to calculate 
+       the final velocity along the x-axis. */
+      PVector[] vFinal = {  
+        new PVector(), new PVector()
+      };
+      // final rotated velocity for b[0]
+      vFinal[0].x = ((m - other.m) * vTemp[0].x + 2 * other.m * vTemp[1].x) / (m + other.m);
+      vFinal[0].y = vTemp[0].y;
+
+      // final rotated velocity for b[0]
+      vFinal[1].x = ((other.m - m) * vTemp[1].x + 2 * m * vTemp[0].x) / (m + other.m);
+      vFinal[1].y = vTemp[1].y;
+
+      // hack to avoid clumping
+      bTemp[0].x += vFinal[0].x;
+      bTemp[1].x += vFinal[1].x;
+
+      /* Rotate ball positions and velocities back
+       Reverse signs in trig expressions to rotate 
+       in the opposite direction */
+      // rotate balls
+      PVector[] bFinal = { 
+        new PVector(), new PVector()
+      };
+
+      bFinal[0].x = cosine * bTemp[0].x - sine * bTemp[0].y;
+      bFinal[0].y = cosine * bTemp[0].y + sine * bTemp[0].x;
+      bFinal[1].x = cosine * bTemp[1].x - sine * bTemp[1].y;
+      bFinal[1].y = cosine * bTemp[1].y + sine * bTemp[1].x;
+
+      // update balls to screen position
+      other.position.x = position.x + bFinal[1].x;
+      other.position.y = position.y + bFinal[1].y;
+
+      position.add(bFinal[0]);
+
+      // update velocities
+      velocity.x = cosine * vFinal[0].x - sine * vFinal[0].y;
+      velocity.y = cosine * vFinal[0].y + sine * vFinal[0].x;
+      other.velocity.x = cosine * vFinal[1].x - sine * vFinal[1].y;
+      other.velocity.y = cosine * vFinal[1].y + sine * vFinal[1].x;
+      
+
+    }
+  }
+  void run(){
+    if(sick==true){
+      c1 = 255;
+      c2 = 0;
+      c3 = 0;
+    }
+    else{
+     c1 = 0;
+    c2 = 128;
+    c3 = 0;
+    }
+      update();
+      borders();
+      render();
+    }
+  void update(){
+      velocity.add(acceleration);
+      velocity.limit(maxspeed);
+      position.add(velocity);
+      acceleration.mult(0);
+    }
+  void borders(){
+    if (position.x < 0) position.x = width+r;
+    if (position.y < 0) position.y = height+r;
+    if (position.x > width+0) position.x = -r;
+    if (position.y > height+0) position.y = -r;
+  }
+}
