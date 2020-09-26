@@ -6,19 +6,23 @@ void setup(){
   float x;
   float y;
   float number_sick;
-  float pe = 0.1;       
-  for(int i = 0; i < 300;i++){
+  float pEnfermos = 0.3;
+  
+  for(int i = 0; i < 50;i++){
     x = random(0,1023);
     y = random(0,1023);
     number_sick = random(0,1);
     Individuo individuo = new Individuo(x,y);
-    if(number_sick <= pe){
+    
+    if(number_sick <= pEnfermos){
       //agrego enfermo
       individuo.sick=true;
+      individuo.timeInfected = millis();
       gente.addIndividuo(individuo);
     }
     else{
       individuo.sick=false;
+      individuo.timeInfected=0;
       gente.addIndividuo(individuo);
     }
   }

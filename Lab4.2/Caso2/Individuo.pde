@@ -10,13 +10,18 @@ public class Individuo{
   float radius = 8.0;
   float vel = 2.0;
   float minDistance = 2 * radius;
-  float socialDistancing = 1.5 * minDistance;
-  float pTransmision = 0.7;
-  float pEnfermos = 0.3;
-  int maxTiempoEnfermo = 500;
-  boolean maskOn;
-  float pInHouse = 0.2;
   float m = radius*.1;
+  boolean maskOn = false;
+  float socialDistancing = 1.5 * minDistance;
+  boolean recovered;
+  int maxTiempoEnfermo = 1500;
+  float pTransmision = 0.7;
+  int timeInfected = 0;
+  boolean inHouse;
+  float pInHouse = 0.2;
+  float inHouseRandomizer;
+
+  
   
   Individuo(float x, float y){
     position = new PVector(x,y);
@@ -24,7 +29,16 @@ public class Individuo{
     acceleration = new PVector(0,0);
     maxspeed = 5;
     maxforce = 10;
-    velocity = PVector.random2D();
+    inHouseRandomizer = random(0,1);
+    if(inHouseRandomizer<=pInHouse){
+      inHouse=true;
+      velocity=new PVector(0,0);
+    }
+    else{
+      inHouse=false;
+      velocity = PVector.random2D();
+    }
+    
     
   }  
   
@@ -48,8 +62,45 @@ public class Individuo{
     }
   }
 
-
-
+  void checkDistance(Individuo other){
+    PVector distanceVect = PVector.sub(other.position,position);
+    float pSick = random(0,1);
+    float distanceVectMag = distanceVect.mag();
+    if(distanceVectMag <= socialDistancing && pSick<=pTransmision){
+      if(other.sick == true && sick==false){
+        if(recovered==true){
+          sick = false;
+        }
+        else{
+          sick = true;
+          timeInfected = millis();
+        }
+      }
+      else if(other.sick==false && sick==true){
+        if(other.recovered==true){
+          other.sick = false;
+        }
+        else{
+          other.sick = true;
+          other.timeInfected = millis();
+        }
+      }
+    }
+  }
+  
+  void checkTimeInfected(){
+    int delta = millis();
+    delta = delta - timeInfected;
+    if(delta>=maxTiempoEnfermo){
+      sick=false;
+      recovered=true;
+    }
+    else{
+      sick =true;
+      recovered = false;
+    }
+  }
+  
   void checkCollision(Individuo other){
     //se ven las distancias
     PVector distanceVect = PVector.sub(other.position,position);
@@ -147,16 +198,25 @@ public class Individuo{
       c2 = 0;
       c3 = 0;
     }
-    else{
+    else if(sick==false){
      c1 = 0;
     c2 = 128;
     c3 = 0;
     }
+    
       update();
       borders();
       render();
     }
   void update(){
+      if(sick ==true){
+      checkTimeInfected();
+      }
+      if(recovered ==true){
+    c1=0;
+    c2=0;
+    c3=255;
+    }
       velocity.add(acceleration);
       velocity.limit(maxspeed);
       position.add(velocity);

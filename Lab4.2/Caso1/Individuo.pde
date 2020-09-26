@@ -13,7 +13,7 @@ public class Individuo{
   float socialDistancing = 1.5 * minDistance;
   float pTransmision = 0.5;
   float pEnfermos = 0.3;
-  int maxTiempoEnfermo = 101;
+  int maxTiempoEnfermo = 20;
   boolean maskOn;
   
   Individuo(float x, float y){

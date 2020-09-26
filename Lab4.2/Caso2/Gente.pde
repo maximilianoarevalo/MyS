@@ -9,7 +9,15 @@ public class Gente{
 
     for(Individuo i: individuos){
       i.run();
+      for(Individuo j:individuos){
+        if(j.inHouse==false && i.inHouse==false){
+        i.checkCollision(j);
+        i.checkDistance(j);
+        }
+      }
+      
     }
+    
     
   }
   void addIndividuo(Individuo i){
