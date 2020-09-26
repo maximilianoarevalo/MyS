@@ -1,26 +1,25 @@
 public class Gente{
-  ArrayList<Sano> sanos;
-  ArrayList<Enfermo> enfermos;
-  
+
+  ArrayList<Individuo> individuos;
   Gente(){
-    sanos = new ArrayList<Sano>();
-    enfermos = new ArrayList<Enfermo>();
+    individuos = new ArrayList<Individuo>();
   }
   
   void run(){
-    for(Sano i : sanos){
-      i.run(sanos);
+
+    for(Individuo i: individuos){
+      i.run();
+      for(Individuo j:individuos){
+        
+        i.checkDistance(j);
+        
+      }
+      
     }
-    for(Enfermo j : enfermos){
-      j.run(enfermos);
-    }
+    
+    
   }
-  
-  void addSano(Sano i){
-    sanos.add(i);
-  }
-  
-  void addEnfermo(Enfermo j){
-    enfermos.add(j);
+  void addIndividuo(Individuo i){
+    individuos.add(i);
   }
 }
