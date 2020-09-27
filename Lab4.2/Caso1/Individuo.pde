@@ -34,22 +34,6 @@ public class Individuo{
     fill(c1,c2,c3);
     ellipse(position.x,position.y,20,20);
   }
-    void checkBoundaryCollision() {
-    if (position.x > width-radius) {
-      position.x = width-radius;
-      velocity.x *= -1;
-    } else if (position.x < radius) {
-      position.x = radius;
-      velocity.x *= -1;
-    } else if (position.y > height-radius) {
-      position.y = height-radius;
-      velocity.y *= -1;
-    } else if (position.y < radius) {
-      position.y = radius;
-      velocity.y *= -1;
-    }
-  }
-
   void checkDistance(Individuo other){
     PVector distanceVect = PVector.sub(other.position,position);
     float pSick = random(0,1);

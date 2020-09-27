@@ -14,7 +14,7 @@ public class Individuo{
   boolean maskOn = false;
   float socialDistancing = 1.5 * minDistance;
   boolean recovered;
-  int maxTiempoEnfermo = 1500;
+  int maxTiempoEnfermo = 15000;
   float pTransmision = 0.7;
   int timeInfected = 0;
   boolean inHouse;
